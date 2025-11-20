@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Stolen Items System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_dashboard.css') }}">
+</head>
+
+<body>
+
+<!-- TOP NAVBAR -->
+<div class="navbar">
+    <h3>My Reports</h3>
+
+    <div class="nav-right">
+        <span class="welcome">{{ session['full_name'] }}</span>
+    </div>
+</div>
+
+
+<!-- MAIN CONTENT -->
+<div class="dashboard-container">
+
+    <!-- Stats -->
+    <div class="stats-row">
+
+        <div class="stat-card">
+            <div class="stat-number">{{ total_reports }}</div>
+            <div class="stat-label">Total Reports</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">{{ pending_count }}</div>
+            <div class="stat-label">Pending Review</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">{{ verified_count }}</div>
+            <div class="stat-label">Verified</div>
+        </div>
+
+    </div>
+
+    <!-- REPORT BUTTON -->
+ <a id="openReportModal" class="add-report-btn">+ Report Stolen Item</a>
+
+
+    <!-- REPORT LIST -->
+    <h3 class="section-title">Your Reports</h3>
+
+    <div class="reports-grid">
+
+        {% for item in items %}
+        <div class="report-card">
+
+            <div class="report-header">
+                <h4>{{ item.title }}</h4>
+
+               {% if item.status == 'Verified' %}
+    <span class="badge verified">✔ Verified</span>
+
+{% elif item.status == 'Rejected' %}
+    <span class="badge rejected">✖ Rejected</span>
+
+{% else %}
+    <span class="badge pending">⏳ Pending</span>
+{% endif %}
+
+
+            </div>
+
+            <span class="category">{{ item.category }}</span>
+
+            <p class="description">{{ item.description }}</p>
+
+            <div class="icon-line">
+                📅 Stolen: {{ item.date }}
+            </div>
+
+            <div class="icon-line">
+                📍 {{ item.location }}
+            </div>
+
+            <p class="reported-time">Reported: {{ item.reported_at }}</p>
+
+        </div>
+        {% endfor %}
+
+    </div>
+    <!-- REPORT STOLEN ITEM MODAL -->
+<div id="reportModal" class="modal-overlay">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2>Report Stolen Item</h2>
+            <span id="closeReportModal" class="close-btn">✖</span>
+        </div>
+
+        <p class="modal-subtitle">Fill out the form below to report a stolen item. All fields are required.</p>
+
+        <form  method="POST">
+
+            <label>Item Title *</label>
+           <input type="text" name="item_name" class="input-field" placeholder="e.g., iPhone 14 Pro" required>
+
+
+            <label>Category *</label>
+            <select name="category" required>
+                <option disabled selected>Select category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Vehicles">Vehicles</option>
+                <option value="Bags">Bags</option>
+                <option value="Documents">Documents</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <label>Description *</label>
+            <textarea style="width: 95%;" name="description" placeholder="Provide detailed description including color, brand, model, unique features..." required></textarea>
+
+            <div class="two-inputs">
+                <div>
+                    <label>Date Stolen *</label>
+                    <input type="date" name="date" required>
+                </div>
+
+                <div>
+                    <label>Location *</label>
+                    <input type="text" name="location" placeholder="e.g., Central Park, NYC" required>
+                </div>
+            </div>
+
+            <label>Contact Information *</label>
+            <input type="email" name="contact"  value="{{ session['email'] }}"   required>
+
+            <div class="modal-actions">
+                <button type="button" id="cancelBtn" class="cancel-btn">Cancel</button>
+                <button type="submit" class="submit-btn">Submit Report</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<script src="{{ url_for('static', filename='js/user_dashboard.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stolen Items Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+   
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="login-box">
+
+        <div class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" alt="shield">
+        </div>
+
+        <h2>Stolen Items Management System</h2>
+         
+  
+
+        <p class="subtitle">Login to report or manage stolen item reports</p>
+
+        <!-- Login Type Toggle -->
+        <div class="login-toggle">
+            <button type="button" id="userBtn" class="active">👤 User</button>
+            <button type="button" id="adminBtn">🛡️ Admin</button>
+        </div>
+ {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="notifications">
+            {% for category, message in messages %}
+                <li class="notification {{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+        <!-- Login Form -->
+        <form id="loginForm" method="POST">
+
+            <label>Email</label>
+            <input id="email" type="text" name="email" placeholder="Enter Email" required>
+
+            <label>Password</label>
+            <input id="password" type="password" name="password" placeholder="Enter password" required>
+
+            <input id="roleInput" type="hidden" name="role" value="user">
+
+            <p class="subtitle">
+                If you do not have an account?
+                <a href="register.html">Register here</a>
+            </p>
+
+            <button type="submit" class="signin-btn">Login</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Stolen Items</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="nav-left">
+        <span class="logo-icon">🛡️</span>
+        <span class="logo-text">Admin Dashboard</span>
+    </div>
+    <div class="nav-right">
+        <span class="welcome">Admin: {{ admin_name }}</span>
+        <a href="/logout" class="logout-btn">⎋ Logout</a>
+    </div>
+</div>
+
+<div class="dashboard-container">
+
+    <!-- STATS -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-label">Total Reports</div>
+            <div class="stat-number">{{ total_reports }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Pending Review</div>
+            <div class="stat-number">{{ pending_reports }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Verified</div>
+            <div class="stat-number">{{ verified_reports }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Rejected</div>
+            <div class="stat-number">{{ rejected_reports }}</div>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-btn active" data-status="Pending">
+            Pending <span class="pill">{{ pending_reports }}</span>
+        </button>
+        <button class="tab-btn" data-status="Verified">Verified</button>
+        <button class="tab-btn" data-status="Rejected">Rejected</button>
+        <button class="tab-btn" data-status="All">All Reports</button>
+    </div>
+
+    <!-- SECTION TITLE -->
+    <h3 class="section-title" id="sectionTitle">Pending Verification</h3>
+
+    <!-- REPORT CARDS -->
+    <div id="reportsContainer" class="reports-grid">
+        <!-- Cards will be injected by JS -->
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+</body>
+</html>
